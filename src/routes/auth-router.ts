@@ -99,8 +99,8 @@ authRouter.post('/new-password',
     attemptsMiddleware,
     userPasswordValidation(),
     userRecoveryCodeValidation(),
-    async (req: RequestWithBody<{code: string, password: string}>, res: Response) => {
-        const recoveryCode = req.body.code
+    async (req: RequestWithBody<{recoveryCode: string, password: string}>, res: Response) => {
+        const recoveryCode = req.body.recoveryCode
         const newPassword = req.body.password
 
         const isUpdate = await authService
