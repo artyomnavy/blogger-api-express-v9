@@ -51,7 +51,7 @@ postsRouter.get('/:id/comments',
                 postId
             })
 
-        res.status(200).send(comments)
+        res.send(comments)
     })
 
 postsRouter.post('/:id/comments',

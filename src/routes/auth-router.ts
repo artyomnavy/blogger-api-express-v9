@@ -17,6 +17,7 @@ import {authService} from "../domain/auth-service";
 import {v4 as uuidv4} from "uuid";
 import {devicesService} from "../domain/devices-service";
 import {attemptsMiddleware} from "../middlewares/auth/attempts-middleware";
+import {recoveryPasswordMiddleware} from "../middlewares/auth/recovery-password-middleware";
 
 export const authRouter = Router({})
 
@@ -98,6 +99,7 @@ authRouter.post('/password-recovery',
 authRouter.post('/new-password',
     attemptsMiddleware,
     userRecoveryCodeValidation(),
+    recoveryPasswordMiddleware,
     userPasswordValidation(),
     async (req: RequestWithBody<{recoveryCode: string, password: string}>, res: Response) => {
         const recoveryCode = req.body.recoveryCode

@@ -145,4 +145,17 @@ export const usersQueryRepository = {
             return user
         }
     },
+    async checkUserPasswordForRecovery(recoveryCode: string, newPassword: string): Promise<boolean> {
+        const user = await UserModelClass
+            .findOne({
+                'emailConfirmation.confirmationCode': recoveryCode,
+                'accountData.password': newPassword
+            }).lean()
+
+        if (!user) {
+            return false
+        } else {
+            return true
+        }
+    }
 }

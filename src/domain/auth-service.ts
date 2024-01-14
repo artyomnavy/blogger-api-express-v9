@@ -89,10 +89,13 @@ export const authService = {
             console.error(e)
             return false
         }
+
         return true
     },
     async updatePasswordForRecovery(recoveryCode: string, newPassword: string) {
+        const newPasswordHash = await bcrypt.hash(newPassword, 10)
+
         return await usersRepository
-            .updatePasswordForRecovery(recoveryCode, newPassword)
+            .updatePasswordForRecovery(recoveryCode, newPasswordHash)
     }
 }
