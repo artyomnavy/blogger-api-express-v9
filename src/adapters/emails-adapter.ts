@@ -35,7 +35,7 @@ export const emailAdapter = {
         const info = await transport.sendMail({
             from: `Blogger Platform <${process.env.EMAIL_API}>`,
             to: email,
-            subject: `Confirm registration account`,
+            subject: `Confirm password recovery`,
             html: `<h1>Password recovery</h1>
        <p>To finish password recovery please follow the link below:
           <a href='https://somesite.com/password-recovery?${recoveryCode}=your_recovery_code'>recovery password</a>

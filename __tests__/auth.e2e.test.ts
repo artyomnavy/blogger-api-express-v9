@@ -424,7 +424,7 @@ describe('/auth', () => {
         await request(app)
             .post('/auth/new-password')
             .send({
-                recoveryCode: recoveryCode,
+                code: recoveryCode,
                 password: 'qwerty123',
             })
             .expect(HTTP_STATUSES.NO_CONTENT_204)

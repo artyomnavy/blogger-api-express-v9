@@ -90,7 +90,7 @@ const codeValidation = body('code')
         return true
     })
 
-const recoveryCodeValidation = body('recoveryCode')
+const recoveryCodeValidation = body('code')
     .isString()
     .trim()
     .notEmpty()
