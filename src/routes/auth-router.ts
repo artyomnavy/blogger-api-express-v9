@@ -84,6 +84,7 @@ authRouter.post('/password-recovery',
             }
 
             res.sendStatus(HTTP_STATUSES.NO_CONTENT_204)
+            return
         }
 
         const newCode = await authService
