@@ -434,7 +434,7 @@ describe('/auth', () => {
             .post('/auth/new-password')
             .send({
                 recoveryCode: recoveryCode,
-                password: '123456'
+                newPassword: '123456'
             })
             .expect(HTTP_STATUSES.UNAUTHORIZED_401)
     })
@@ -444,7 +444,7 @@ describe('/auth', () => {
             .post('/auth/new-password')
             .send({
                 recoveryCode: recoveryCode,
-                password: 'qwerty123',
+                newPassword: 'qwerty123',
             })
             .expect(HTTP_STATUSES.NO_CONTENT_204)
     })

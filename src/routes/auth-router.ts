@@ -8,7 +8,7 @@ import {authBearerMiddleware, authRefreshTokenMiddleware} from "../middlewares/a
 import {usersQueryRepository} from "../repositories/users-db-query-repository";
 import {
     userAuthValidation,
-    userConfirmEmailValidation, userEmailValidation, userPasswordValidation, userRecoveryCodeValidation,
+    userConfirmEmailValidation, userEmailValidation, userNewPasswordValidation, userRecoveryCodeValidation,
     userRegistrationCodeValidation,
     userValidation
 } from "../middlewares/validators/users-validator";
@@ -99,11 +99,11 @@ authRouter.post('/password-recovery',
 authRouter.post('/new-password',
     attemptsMiddleware,
     userRecoveryCodeValidation(),
-    userPasswordValidation(),
+    userNewPasswordValidation(),
     recoveryPasswordMiddleware,
-    async (req: RequestWithBody<{recoveryCode: string, password: string}>, res: Response) => {
+    async (req: RequestWithBody<{recoveryCode: string, newPassword: string}>, res: Response) => {
         const recoveryCode = req.body.recoveryCode
-        const newPassword = req.body.password
+        const newPassword = req.body.newPassword
 
         const isUpdate = await authService
             .updatePasswordForRecovery(recoveryCode, newPassword)

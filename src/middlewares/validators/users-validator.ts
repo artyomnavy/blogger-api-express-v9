@@ -32,6 +32,12 @@ const passwordValidation = body('password')
     .isLength({min: 6, max: 20})
     .withMessage('Invalid password')
 
+const newPasswordValidation = body('newPassword')
+    .isString()
+    .trim()
+    .isLength({min: 6, max: 20})
+    .withMessage('Invalid password')
+
 const emailUniqueValidation = body('email')
     .custom(async(value) => {
         const user = await usersQueryRepository
@@ -116,6 +122,6 @@ export const userAuthValidation = () => [loginOrEmailValidation, passwordValidat
 export const userRegistrationCodeValidation = () => [codeValidation, inputModelValidation]
 export const userConfirmEmailValidation = () => [confirmEmailValidation, inputModelValidation]
 export const userEmailValidation = () => [emailValidation, inputModelValidation]
-export const userPasswordValidation = () => [passwordValidation, inputModelValidation]
+export const userNewPasswordValidation = () => [newPasswordValidation, inputModelValidation]
 export const userRecoveryCodeValidation = () => [recoveryCodeValidation, inputModelValidation]
 
