@@ -99,8 +99,8 @@ authRouter.post('/password-recovery',
 authRouter.post('/new-password',
     attemptsMiddleware,
     userRecoveryCodeValidation(),
-    recoveryPasswordMiddleware,
     userPasswordValidation(),
+    recoveryPasswordMiddleware,
     async (req: RequestWithBody<{recoveryCode: string, password: string}>, res: Response) => {
         const recoveryCode = req.body.recoveryCode
         const newPassword = req.body.password

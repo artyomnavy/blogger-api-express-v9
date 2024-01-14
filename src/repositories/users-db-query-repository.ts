@@ -4,6 +4,7 @@ import {UserModelClass} from "../db/db";
 import {userMapper} from "../types/user/mapper";
 import {ObjectId, WithId} from "mongodb";
 import {OutputAuthMeType} from "../types/auth/output";
+import bcrypt from "bcrypt";
 
 export const usersQueryRepository = {
     async getAllUsers(QueryData: PaginatorUserModel): Promise<PaginatorUsersType> {
@@ -147,15 +148,12 @@ export const usersQueryRepository = {
     },
     async checkUserPasswordForRecovery(recoveryCode: string, newPassword: string): Promise<boolean> {
         const user = await UserModelClass
-            .findOne({
-                'emailConfirmation.confirmationCode': recoveryCode,
-                'accountData.password': newPassword
-            }).lean()
+            .findOne({'emailConfirmation.confirmationCode': recoveryCode}).lean()
 
         if (!user) {
             return false
         } else {
-            return true
+            return await bcrypt.compare(newPassword, user.accountData.password)
         }
     }
 }

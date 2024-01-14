@@ -418,6 +418,28 @@ describe('/auth', () => {
             .findOne({'accountData.login': 'login'})
 
         recoveryCode = getUserByLogin!.emailConfirmation.confirmationCode
+
+        console.log(getUserByLogin!.accountData.password)
+    })
+
+    it('- POST recovery password with incorrect data', async () => {
+        await request(app)
+            .post('/auth/new-password')
+            .send({
+                recoveryCode: recoveryCode,
+                password: ''
+            })
+            .expect(HTTP_STATUSES.BAD_REQUEST_400)
+    })
+
+    it('- POST recovery password with old password', async () => {
+        await request(app)
+            .post('/auth/new-password')
+            .send({
+                recoveryCode: recoveryCode,
+                password: '123456'
+            })
+            .expect(HTTP_STATUSES.UNAUTHORIZED_401)
     })
 
     it('+ POST new password with exist user', async () => {
