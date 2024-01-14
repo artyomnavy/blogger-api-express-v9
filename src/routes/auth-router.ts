@@ -73,16 +73,6 @@ authRouter.post('/password-recovery',
             .getUserByEmail(email)
 
         if (!user) {
-            const isSend = await authService
-                .sendEmailForPasswordRecovery(email, uuidv4())
-
-            if (!isSend) {
-                res
-                    .status(HTTP_STATUSES.IM_A_TEAPOT_418)
-                    .send('Recovery code don\'t sended to passed email address, try later')
-                return
-            }
-
             res.sendStatus(HTTP_STATUSES.NO_CONTENT_204)
             return
         }
@@ -109,8 +99,8 @@ authRouter.post('/new-password',
     attemptsMiddleware,
     userRecoveryCodeValidation(),
     userPasswordValidation(),
-    async (req: RequestWithBody<{code: string, password: string}>, res: Response) => {
-        const recoveryCode = req.body.code
+    async (req: RequestWithBody<{recoveryCode: string, password: string}>, res: Response) => {
+        const recoveryCode = req.body.recoveryCode
         const newPassword = req.body.password
 
         const isUpdate = await authService
