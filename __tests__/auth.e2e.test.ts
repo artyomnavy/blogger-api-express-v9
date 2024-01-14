@@ -7,7 +7,6 @@ import {emailAdapter} from "../src/adapters/emails-adapter";
 import {UserModelClass} from "../src/db/db";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
-import exp = require("node:constants");
 
 const loginBasicAuth = 'admin'
 const passwordBasicAuth = 'qwerty'
@@ -418,8 +417,6 @@ describe('/auth', () => {
             .findOne({'accountData.login': 'login'})
 
         recoveryCode = getUserByLogin!.emailConfirmation.confirmationCode
-
-        console.log(getUserByLogin!.accountData.password)
     })
 
     it('- POST recovery password with incorrect data', async () => {
