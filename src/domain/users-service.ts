@@ -5,35 +5,8 @@ import {usersRepository} from "../repositories/users-db-repository";
 import bcrypt from 'bcrypt';
 import {usersQueryRepository} from "../repositories/users-db-query-repository";
 import {AuthLoginModel} from "../types/auth/input";
-import {v4 as uuidv4} from "uuid";
-import {add} from "date-fns/add";
 
 export const usersService = {
-    async createUser(createData: CreateUserModel): Promise<OutputUserType> {
-        const passwordHash = await bcrypt.hash(createData.password, 10)
-
-        const newUser = {
-            _id: new ObjectId(),
-            accountData: {
-                login: createData.login,
-                password: passwordHash,
-                email: createData.email,
-                createdAt: new Date()
-            },
-            emailConfirmation: {
-                confirmationCode: uuidv4(),
-                expirationDate: add(new Date(), {
-                    minutes: 10
-                }),
-                isConfirmed: false
-            }
-        }
-
-        const createdUser = await usersRepository
-            .createUser(newUser)
-
-        return createdUser
-    },
     async createUserByAdmin(createData: CreateUserModel): Promise<OutputUserType> {
         const passwordHash = await bcrypt.hash(createData.password, 10)
 

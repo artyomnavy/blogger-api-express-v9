@@ -224,7 +224,7 @@ describe('/auth', () => {
         // console.log(spiedSendEmail.mock.calls) // возвращает массив того, что приходит в функцию
 
         const getUserByLogin = await UserModelClass
-            .findOne({'accountData.login': 'artyom'})
+            .findOne({'accountData.login': 'artyom'}).lean()
 
         code = getUserByLogin!.emailConfirmation.confirmationCode
 
@@ -268,7 +268,7 @@ describe('/auth', () => {
 
         // Updated code:
         const getUserByLogin = await UserModelClass
-            .findOne({'accountData.login': 'artyom'})
+            .findOne({'accountData.login': 'artyom'}).lean()
 
         code = getUserByLogin!.emailConfirmation.confirmationCode
     })
@@ -414,7 +414,7 @@ describe('/auth', () => {
         expect(emailAdapter.sendEmailWithRecoveryCode).toHaveBeenCalled()
 
         const getUserByLogin = await UserModelClass
-            .findOne({'accountData.login': 'login'})
+            .findOne({'accountData.login': 'login'}).lean()
 
         recoveryCode = getUserByLogin!.emailConfirmation.confirmationCode
     })
